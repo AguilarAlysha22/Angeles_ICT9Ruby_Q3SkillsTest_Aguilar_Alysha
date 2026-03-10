@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q3 Skills Test</title>
+
+    <style>
+        body{
+            font-family: 'Quicksand', sans-serif;
+            background-image: url('bg.jpg'); 
+            background-size: cover;     
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+        }
+        nav{
+            background-color: #0077b6;
+            padding: 15px;
+        }
+        nav a{
+            color: white;
+            margin-right: 25px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .container{
+            padding: 40px;
+            background: #ffffff;
+            width: 750px;
+            margin: 50px auto;
+            border-radius: 15px;
+            border: 2px solid #00b4d8;
+        }
+        .row{
+            display: flex;
+            gap: 30px;
+        }
+        .left{
+            width: 35%;
+            text-align: center;
+        }
+        .right{
+            width: 65%;
+        }
+        .profile{
+            height: 130px;
+            width: 130px;
+            background: #90e0ef;
+            border-radius: 50%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #0077b6;
+        }
+        input[type="text"], input[type="number"], input[type="email"], input[type="tel"], input[type="password"]{
+            width: 95%;
+            padding: 9px;
+            font-family: 'Quicksand', sans-serif;
+            border: 1px solid #bfbfbf;
+            margin-top: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        input[type="file"]{
+            margin-top: 10px;
+            padding: 5px;
+        }
+        button{
+            font-family: 'Quicksand', sans-serif;
+            padding: 10px 16px;
+            background: #0077b6;
+            color: white;
+            border: none;
+            margin-top: 8px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover{
+            background: #0096c7;
+        }
+        h1{
+            margin-top: 0;
+            letter-spacing: 1px;
+            color: #023e8a;
+        }
+        h2, h3{
+            color: #023e8a;
+        }
+        p{
+            color: #023e8a;
+        }
+        .checkbox-label{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #0077b6;
+        }
+        #output{
+            margin-top: 10px;
+            font-weight: 600;
+            color: #0077b6;
+        }
+        .divider{
+            width: 2px;
+            background: #00b4d8;
+            margin: 0 15px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#">UrbanWear</a>
+        <a href="#">Shop</a>
+        <a href="#">Collections</a>
+        <a href="#">Help</a>
+    </nav>
+
+    <div class="container">
+        <h1>UrbanWear</h1>
+        <p>Create an account to shop faster and save your favorite outfits.</p>
+
+        <div class="row">
+            <div class="left">
+                <h3>Profile Photo</h3>
+                <div class="profile" id="profileCircle">IMG</div>
+                <input type="file" id="profileFile">
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="right">
+                <h2>Registration</h2>
+                <form id="regForm">
+                <input type="text" id="fname" placeholder="First Name" required>
+                <input type="text" id="lname" placeholder="Last Name" required>
+                <input type="number" id="age" placeholder="Age" min="1" max="110">
+                <input type="tel" id="contact" placeholder="Contact Number" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <br>
+
+                <label class="checkbox-label">
+                 <input type="checkbox" id="terms">
+                 I accept the <a href="https://link.com/terms/preview">Terms and Policies</a>
+                </label>
+                <br>
+
+                <button type="button" onclick="createAccount()">Create My Account</button>
+                <button type="button" onclick="clearForm()">Cancel</button>
+                <p id="output"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createAccount(){
+            var first = document.getElementById("fname").value;
+            var last = document.getElementById("lname").value;
+            var agree = document.getElementById("terms").checked;
+            var file = document.getElementById("profileFile").files[0];
+
+            if(first == "" || last == ""){
+                document.getElementById("output").innerHTML = "Please enter your full name.";
+                return
+            }
+            if(agree == false){
+                document.getElementById("output").innerHTML = "You must accept the Terms and Policies.";
+                return
+            }
+            if(file){
+                alert("Your profile picture has been uploaded!");
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    var profileCircle = document.getElementById("profileCircle");
+                    profileCircle.innerHTML = "";
+                    var img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.style.width = "100%";
+                    img.style.height = "100%";
+                    img.style.borderRadius = "50%";
+                    img.style.objectFit = "cover";
+                    profileCircle.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+            document.getElementById("output").innerHTML = "Welcome " + first + "! Your account is ready.";
+        }
+        function clearForm(){
+            document.getElementById("regForm").reset();
+            document.getElementById("output").innerHTML="Form cleared."
+        }
+    </script>
+    
+</body>
+</html>
